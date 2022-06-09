@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+    whoami:
+        # A container that exposes an API to show its IP address
+        image: traefik/whoami
+        labels:
+            - "traefik.enable=true"
+            # 重定向 https
+            - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+            - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+            - "traefik.http.routers.whoami.middlewares=redirect-to-https"
+            # http
+            - "traefik.docker.network=traefik-webgateway"
+            - "traefik.http.routers.whoami.rule=Host(`TRAEFIK_URI`) && Path(`/whoami`)"
+            - "traefik.http.routers.whoami.entrypoints=web"
+            # https
+            - "traefik.http.routers.whoami-secure.rule=Host(`TRAEFIK_URI`) && Path(`/whoami`)"
+            - "traefik.http.routers.whoami-secure.entrypoints=websecure"
+            - "traefik.http.routers.whoami-secure.tls.certresolver=intoevidence"
+            - "traefik.http.routers.whoami-secure.tls=true"
+            - "traefik.http.routers.whoami-secure.tls.domains[0].main=intoevidence.cn"
+            - "traefik.http.routers.whoami-secure.tls.domains[0].sans=*.intoevidence.cn"
+            
+
+        networks: 
+            - traefik-webgateway
+
+networks:
+    traefik-webgateway:
+        external: 
+            name: network-traefik

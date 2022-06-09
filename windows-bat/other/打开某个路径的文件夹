@@ -1,0 +1,3 @@
+@echo off
+start explorer "C:\Program Files\cpolar"
+rem @pause

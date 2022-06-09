@@ -1,0 +1,28 @@
+http:
+  routers:
+    api:
+      entryPoints:
+        - "web"
+        - "websecure"
+      service: "api@internal"
+      rule: "Host(`TRAEFIK_URI`)"
+      priority: 42
+      middlewares:
+       - "traefik-auth"
+      # tls:
+      #   certResolver: CERTRESOLVER_NAME
+      #   domains:
+      #     - main: "MAIN_DOMAIN"
+      #       sans:
+      #         - "SANS_DOMAIN"
+  middlewares:
+    traefik-auth:
+      basicAuth:
+        usersFile: "/etc/traefik/config/usersFile.txt"
+      
+tls:
+    certificates:
+      - certFile: path/to/cert.pem
+        keyFile: path/to/cert.key
+        stores:
+          - default

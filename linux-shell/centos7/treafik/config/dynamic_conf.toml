@@ -1,0 +1,47 @@
+[http]
+  [http.routers]
+    [http.routers.whoami]
+      entryPoints = ["web"]
+      # middlewares = ["foobar", "foobar"]
+      service = "whoami-traefik@docker"
+      rule = "Host(`whoami.qingwork.fun`)"
+      priority = 42
+
+    [http.routers.gocd-ci]
+      entryPoints = ["web"]
+      # middlewares = ["foobar", "foobar"]
+      service = "gocd"
+      rule = "Host(`gocd-ci.qingwork.fun`)"
+      # priority = 42
+
+    [http.routers.api]
+      entryPoints = ["web"]
+      # middlewares = ["foobar", "foobar"]
+      service = "api@internal"
+      rule = "Host(`traefik.qingwork.fun`)"
+      priority = 42
+      # [http.routers.api.tls]
+      #   options = "foobar"
+      #   certResolver = "foobar"
+
+      #   [[http.routers.api.tls.domains]]
+      #     main = "foobar"
+      #     sans = ["foobar", "foobar"]
+
+      #   [[http.routers.api.tls.domains]]
+      #     main = "foobar"
+      #     sans = ["foobar", "foobar"]
+
+  [http.services]
+    [http.services.gocd]
+      [http.services.gocd.loadBalancer]
+        passHostHeader = false        
+        [[http.services.gocd.loadBalancer.servers]]
+          url = "http://172.17.30.239:8153/"
+
+  [tls.stores]
+    [tls.stores.default]
+      [tls.stores.default.defaultCertificate]
+        certFile = "path/to/cert.crt"
+        keyFile  = "path/to/cert.key"
+

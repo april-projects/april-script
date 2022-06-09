@@ -1,0 +1,4 @@
+@echo off
+set name=我被复制了
+echo %name%|clip
+@pause

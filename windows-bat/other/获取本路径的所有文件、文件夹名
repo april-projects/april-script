@@ -1,0 +1,6 @@
+@echo off
+title 获取本路径的所有文件、文件夹名
+echo. 并输出至本级名为.fileNames.txt 文件
+dir/s/b > .fileNames.txt
+echo. 输出完成！
+@pause

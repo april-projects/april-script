@@ -1,0 +1,93 @@
+[global]
+  checkNewVersion = true
+  sendAnonymousUsage = true
+
+[serversTransport]
+  insecureSkipVerify = false
+  rootCAs = ["foobar", "foobar"]
+  maxIdleConnsPerHost = 42
+  [serversTransport.forwardingTimeouts]
+    dialTimeout = 60
+    responseHeaderTimeout = 30
+    idleConnTimeout = 30
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+    [entryPoints.web.transport]
+      [entryPoints.web.transport.lifeCycle]
+        requestAcceptGraceTimeout = 42
+        graceTimeOut = 42
+      [entryPoints.web.transport.respondingTimeouts]
+        readTimeout = 42
+        writeTimeout = 42
+        idleTimeout = 42
+    [entryPoints.web.proxyProtocol]
+      insecure = true
+      trustedIPs = ["127.0.0.1"]
+    [entryPoints.web.forwardedHeaders]
+      insecure = true
+      trustedIPs = ["127.0.0.1"]
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[providers]
+  providersThrottleDuration = 42
+  [providers.docker]
+    # constraints = "foobar"
+    watch = true
+    endpoint = "unix:///var/run/docker.sock"
+    # defaultRule = "foobar"
+    exposedByDefault = false
+    useBindPortIP = false
+    swarmMode = false
+    network = "traefik-webgateway"
+    swarmModeRefreshSeconds = 42
+  [providers.file]
+    filename = "/etc/traefik/config/dynamic_conf.toml"
+    watch = true
+    debugLogGeneratedTemplate = true
+  
+  [providers.rest]
+    insecure = true
+  [providers.http]
+
+
+[api]
+  insecure = true
+  dashboard = true
+  debug = true
+
+
+# [pilot]
+  # token = "foobar"
+
+[ping]
+  entryPoint = "web"
+  manualRouting = true
+  terminatingStatusCode = 42
+
+[log]
+  level = "DEBUG"
+  filePath = "/var/log/traefik/traefik.log"
+  format = "common"
+
+[accessLog]
+  filePath = "/var/log/traefik/traefik-access.log"
+  format = "common"
+  bufferingSize = 500
+  [accessLog.filters]
+    statusCodes = ["200"]
+    retryAttempts = true
+    minDuration = 10
+  [accessLog.fields]
+    defaultMode = "keep"
+    [accessLog.fields.names]
+      name0 = "drop"
+      name1 = "keep"
+    [accessLog.fields.headers]
+      defaultMode = "keep"
+      [accessLog.fields.headers.names]
+        name0 = "keep"
+        name1 = "keep"

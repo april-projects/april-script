@@ -1,0 +1,1 @@
+chkntfs /t:0

@@ -1,0 +1,1 @@
+﻿ECHO G=FFFF:0000 | DEBUG

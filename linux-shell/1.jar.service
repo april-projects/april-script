@@ -1,0 +1,17 @@
+[Unit]
+Description=ksj system service
+After=network.target
+
+[Service]
+SuccessExitStatus=143
+
+Restart=on-failure
+RestartSec=5s
+Type=simple
+
+WorkingDirectory=/home/kjs/
+ExecStart=/usr/local/java/jdk1.8.0_221/bin/java -Xdebug -Xrunjdwp:transport=dt_socket,address=8899,server=y,suspend=y -jar /home/kjs/kjs-system.jar
+ExecStop=/bin/kill -15 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

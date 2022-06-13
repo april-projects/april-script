@@ -1,6 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
-title 添加右键“刘显安用cmd打开当前目录”(by刘显安)
+title 添加右键“用cmd打开当前目录”
 color E0
 
 
@@ -14,8 +14,8 @@ set Line===================================================
 echo %Line%
 echo 	提示：本工具同时支持XP、Win7、Win8系统
 echo.
-echo		[A]	添加右键“刘显安用cmd打开当前目录”
-echo		[B]	去除右键“刘显安用cmd打开当前目录”
+echo		[A]	添加右键“用cmd打开当前目录”
+echo		[B]	去除右键“用cmd打开当前目录”
 echo		[C]	关于
 echo.
 echo		[X]	退出
@@ -31,17 +31,17 @@ goto :menu
 
 
 :add
-REG ADD "HKCR\*\shell\刘显安用cmd打开当前目录\command" /ve /t REG_EXPAND_SZ /d %ComSpec%
-REG ADD "HKCR\Directory\shell\刘显安用cmd打开当前目录\command" /ve /t REG_EXPAND_SZ /d "%ComSpec% /k cd %1"
-REG ADD "HKCR\Drive\shell\刘显安用cmd打开当前目录\command" /ve /t REG_EXPAND_SZ /d "%ComSpec% /k cd %1"
+REG ADD "HKCR\*\shell\用cmd打开当前目录\command" /ve /t REG_EXPAND_SZ /d %ComSpec%
+REG ADD "HKCR\Directory\shell\用cmd打开当前目录\command" /ve /t REG_EXPAND_SZ /d "%ComSpec% /k cd %1"
+REG ADD "HKCR\Drive\shell\用cmd打开当前目录\command" /ve /t REG_EXPAND_SZ /d "%ComSpec% /k cd %1"
 echo 添加成功！
 goto :EOF
 
 
 :remove
-echo Y|REG DELETE "HKCR\*\shell\刘显安用cmd打开当前目录"
-echo Y|REG DELETE "HKCR\Directory\shell\刘显安用cmd打开当前目录"
-echo Y|REG DELETE "HKCR\Drive\shell\刘显安用cmd打开当前目录"
+echo Y|REG DELETE "HKCR\*\shell\用cmd打开当前目录"
+echo Y|REG DELETE "HKCR\Directory\shell\用cmd打开当前目录"
+echo Y|REG DELETE "HKCR\Drive\shell\用cmd打开当前目录"
 echo 删除成功！
 goto :EOF
 
@@ -65,15 +65,5 @@ echo.&echo 请按任意键退出吧……
 pause>nul
 exit
 
-
-:about::关于
-echo.
-echo 【添加右键“刘显安用cmd打开当前目录”】
-echo 作者：刘显安
-echo 微博：http://weibo.com/liuxianan
-echo QQ：937925941
-echo 日期：2013年3月23日
-echo 最后修改：2015年2月15日
-echo.
 goto :EOF
 
